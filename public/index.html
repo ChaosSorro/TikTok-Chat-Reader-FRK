@@ -131,6 +131,30 @@
             });
         }
     </script>
+    <script>
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        function toggleLayout() {
+            const container = document.querySelector('.splitchattable');
+            container.classList.toggle('swapped');
+            const isSwapped = container.classList.contains('swapped');
+            localStorage.setItem('layoutSwapped', isSwapped);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            if (localStorage.getItem('layoutSwapped') === 'true') {
+                document.querySelector('.splitchattable').classList.add('swapped');
+            }
+        });
+    </script>
 </head>
 <body>
 <div class="head">
@@ -151,6 +175,9 @@
     <input type="button" id="connectButton" value="Connect">
     <input type="button" id="disconnectButton" class="disconnect" value="Disconnect" style="display:none">
     <a href="#" onclick="generateOverlay()">Generate Overlay URL</a>
+    <div style="flex:1;"></div>
+    <button class="downloadbtn" onclick="toggleTheme()" style="padding:7px 15px;">Toggle Dark Mode</button>
+    <button class="downloadbtn" onclick="toggleLayout()" style="padding:7px 15px;">Swap Layout</button>
 </div>
 
 <div class="splitstatebar">
@@ -160,13 +187,13 @@
 
 <div class="splitchattable">
     <div>
-        <div class="chatcontainer">
-            <h3 class="containerheader"><span>Chats</span><span class="headeractions"><button class="downloadbtn" id="chatAutoScroll" onclick="toggleChatAutoScroll()">Auto-scroll: ON</button><button class="downloadbtn" onclick="downloadJSON(chatHistory, 'chats.json')">Download</button></span></h3>
+        <div class="giftcontainer">
+            <h3 class="containerheader"><span>Gifts</span><span class="headeractions"><button class="downloadbtn" id="giftAutoScroll" onclick="toggleGiftAutoScroll()">Auto-scroll: ON</button><button class="downloadbtn" onclick="downloadJSON(giftHistory, 'gifts.json')">Download</button></span></h3>
         </div>
     </div>
     <div>
-        <div class="giftcontainer">
-            <h3 class="containerheader"><span>Gifts</span><span class="headeractions"><button class="downloadbtn" id="giftAutoScroll" onclick="toggleGiftAutoScroll()">Auto-scroll: ON</button><button class="downloadbtn" onclick="downloadJSON(giftHistory, 'gifts.json')">Download</button></span></h3>
+        <div class="chatcontainer">
+            <h3 class="containerheader"><span>Chats</span><span class="headeractions"><button class="downloadbtn" id="chatAutoScroll" onclick="toggleChatAutoScroll()">Auto-scroll: ON</button><button class="downloadbtn" onclick="downloadJSON(chatHistory, 'chats.json')">Download</button></span></h3>
         </div>
     </div>
 </div>
